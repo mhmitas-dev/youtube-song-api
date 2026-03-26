@@ -4,7 +4,8 @@ from ytmusicapi import YTMusic
 
 app = FastAPI(title="YouTube Song Search API")
 
-ytmusic = YTMusic()
+# Using India as default - good balance for global availability
+ytmusic = YTMusic(location="IN")
 
 @app.get("/search")
 async def search_songs(
@@ -39,9 +40,8 @@ async def search_songs(
 
 @app.get("/top")
 async def search_top_song(q: str = Query(..., description="Song name or artist + song")):
-    """Returns only the single best matching song - ideal for chatbots"""
     try:
-        results = ytmusic.search(q, filter="songs", limit=5)
+        results = ytmusic.search(q, filter="songs", limit=8)
 
         for item in results:
             if item.get('resultType') == 'song' and item.get('videoId'):
@@ -53,7 +53,7 @@ async def search_top_song(q: str = Query(..., description="Song name or artist +
                     "videoId": video_id,
                     "youtube_url": f"https://www.youtube.com/watch?v={video_id}"
                 }
-
+        
         return {"error": "No song found"}
 
     except Exception:
@@ -62,4 +62,4 @@ async def search_top_song(q: str = Query(..., description="Song name or artist +
 
 @app.get("/")
 async def root():
-    return {"message": "YouTube Song Search API is running! Use /search or /top"}
+    return {"message": "YouTube Song Search API running (using India region)"}
