@@ -36,8 +36,6 @@ async def search_songs(
                 "duration": item.get('duration', 'N/A'),
                 "videoId": video_id,
                 "youtube_url": f"https://www.youtube.com/watch?v={video_id}",      # Main link (most chatbots auto-play this)
-                "music_url": f"https://music.youtube.com/watch?v={video_id}",     # YouTube Music version
-                "thumbnail": item.get('thumbnails', [{}])[0].get('url') if item.get('thumbnails') else None
             }
             songs.append(song_data)
 
@@ -51,6 +49,29 @@ async def search_songs(
             status_code=500,
             content={"error": "Something went wrong. Please try again later."}
         )
+
+
+@app.get("/top")
+async def search_top_song(q: str = Query(..., description="Song name or artist + song")):
+    """Returns only the best matching song - perfect for chatbots"""
+    try:
+        results = ytmusic.search(q, filter="songs", limit=5)
+        
+        for item in results:
+            if item.get('resultType') == 'song' and item.get('videoId'):
+                video_id = item['videoId']
+                return {
+                    "title": item.get('title', 'Unknown'),
+                    "artist": item.get('artists')[0]['name'] if item.get('artists') else "Unknown",
+                    "duration": item.get('duration', 'N/A'),
+                    "youtube_url": f"https://www.youtube.com/watch?v={video_id}",
+                }
+        
+        return {"error": "No song found"}
+        
+    except Exception:
+        return {"error": "Something went wrong"}
+        
 
 @app.get("/")
 async def root():
