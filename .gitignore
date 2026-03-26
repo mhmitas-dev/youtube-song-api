@@ -1,0 +1,92 @@
+# --- Bytecode & Python Artifacts ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# --- Virtual Environments ---
+# If you use venv, virtualenv, pipenv, or poetry
+venv/
+ENV/
+env/
+.venv/
+.ENV/
+.env/
+.pytest_cache/
+
+# --- Environment Variables & Secrets ---
+# CRITICAL: Never commit API keys or Auth tokens
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+
+# --- ytmusicapi Specifics ---
+# ytmusicapi often requires a JSON file for authentication cookies/headers
+# Replace 'headers_auth.json' with whatever filename you use for auth
+headers_auth.json
+auth.json
+browser.json
+oauth.json
+
+# --- IDE & Editors ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# --- Logs & Database ---
+*.log
+logs/
+*.db
+*.sqlite
+*.sqlite3
+*.db-shm
+*.db-wal
+
+# --- OS Files ---
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# --- FastAPI / Uvicorn ---
+# Sometimes reload files or sockets end up here
+*.sock
+*.pid
+
+# --- Testing ---
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
